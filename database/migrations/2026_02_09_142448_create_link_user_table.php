@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('link_user', function (Blueprint $table) {
-            $table->id();
+            $table->foreignId('link_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('permission');
             $table->timestamps();
+            $table->primary(['link_id','user_id']);
         });
     }
 
