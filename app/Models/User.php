@@ -45,4 +45,26 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Roles (Many-to-Many)
+    public function roles() {
+        return $this->belongsToMany(Role::class);
+    }
+
+    // Links created by user (One-to-Many)
+    public function links() {
+        return $this->hasMany(Link::class);
+    }
+
+    // Favorites (Many-to-Many)
+    public function favorites() {
+        return $this->belongsToMany(Link::class, 'favorites');
+    }
+
+    // Links shared with user (Many-to-Many with pivot permission)
+    public function sharedLinks() {
+        return $this->belongsToMany(Link::class, 'link_user')
+                    ->withPivot('permission')
+                    ->withTimestamps();
+    }
 }
