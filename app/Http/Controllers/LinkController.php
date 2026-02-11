@@ -4,14 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Link;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class LinkController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         $user = auth()->user();
@@ -21,7 +17,7 @@ class LinkController extends Controller
                      ->orWhereHas('sharedWith', fn($q) => $q->where('user_id', $user->id))
                      ->get();
 
-        return view('links.index', compact('links'));
+        return view('dashboard', compact('links'));
     }
 
     public function create()
