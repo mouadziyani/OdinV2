@@ -67,4 +67,13 @@ class User extends Authenticatable
                     ->withPivot('permission')
                     ->withTimestamps();
     }
+    public function hasRole($role)
+    {
+        return $this->roles()->where('name', $role)->exists();
+    }
+
+    public function favoriteLinks()
+    {
+        return $this->belongsToMany(Link::class, 'favorites');
+    }
 }
